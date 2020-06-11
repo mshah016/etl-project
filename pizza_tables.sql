@@ -8,15 +8,15 @@ CREATE TABLE toppings (
 
 DROP TABLE restaurant_chains;
 CREATE TABLE restaurant_chains (
-	restaurant_id INT PRIMARY KEY,
+	chain_id INT PRIMARY KEY,
 	restaurant_name VARCHAR,
 	count INT
 );
 
 DROP TABLE restaurant_location;
 CREATE TABLE restaurant_location (
-	restaurant_id INT PRIMARY KEY,
-	restaurant_name VARCHAR,
+	location_id INT PRIMARY KEY,
+	restaurant_id INT,
 	restaurant_address VARCHAR,
 	city VARCHAR,
 	country VARCHAR,
@@ -28,25 +28,18 @@ CREATE TABLE restaurant_location (
 
 DROP TABLE price_range;
 CREATE TABLE price_range(
-	restaurant_id INT PRIMARY KEY,
-	restaurant_name VARCHAR,
+	location_id INT PRIMARY KEY,
 	price_range_min FLOAT,
 	price_range_max FLOAT
 );
 
--- SELECT * FROM restaurant_location
--- JOIN price_range
--- ON restaurant_location.restaurant_name = price_range.restaurant_name;
-
 ALTER TABLE restaurant_location 
-ADD CONSTRAINT restaurant_name FOREIGN KEY(restaurant_name)
-REFERENCES restaurant_chains(restaurant_name);
-
-ALTER TABLE price_range
-ADD CONSTRAINT restaurant_name FOREIGN KEY (restaurant_name)
-REFERENCES restaurant_chains (restaurant_name);
+ADD CONSTRAINT restaurant_id FOREIGN KEY(restaurant_id)
+REFERENCES restaurant_chains(chain_id);
 
 ALTER TABLE restaurant_location
-ADD CONSTRAINT restaurant_id FOREIGN KEY (restaurant_id)
-REFERENCES price_range(restaurant_id);
+ADD CONSTRAINT location_id FOREIGN KEY (location_id)
+REFERENCES price_range(location_id);
+
+
 
